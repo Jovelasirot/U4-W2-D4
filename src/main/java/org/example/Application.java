@@ -6,10 +6,7 @@ import entities.Order;
 import entities.Product;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -57,7 +54,42 @@ public class Application {
 
         System.out.println("----------------------------------------------------");
 
-//        
+//        es3
+        System.out.println("es3");
+
+        List<Product> productsInDecreasingPrice = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed()).toList();
+
+        System.out.println("All products in decreasing order:");
+        productsInDecreasingPrice.forEach(System.out::println);
+
+        System.out.println("----------------------------------");
+
+        List<Product> booksProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Books")).toList();
+
+        System.out.println("Books product in decreasing order:");
+        booksProductsInDecreasingPrice.forEach(System.out::println);
+
+        System.out.println("----------------------------------");
+
+        List<Product> boysProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Boys")).toList();
+
+        System.out.println("Boys product in decreasing order:");
+        boysProductsInDecreasingPrice.forEach(System.out::println);
+
+        System.out.println("----------------------------------");
+
+        List<Product> babyProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Baby")).toList();
+
+        System.out.println("Baby  product in decreasing order:");
+        boysProductsInDecreasingPrice.forEach(System.out::println);
+
+        System.out.println("----------------------------------");
+
+        List<Product> gunsProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Guns")).toList();
+
+        System.out.println("Guns product in decreasing order:");
+        boysProductsInDecreasingPrice.forEach(System.out::println);
+
     }
     public static Supplier<Product> getProductSupplier() {
         Random rdm = new Random();
