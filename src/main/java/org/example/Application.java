@@ -109,22 +109,22 @@ public class Application {
 
         System.out.println("-----------LIST-----------");
 
-        System.out.println("Baby  product in decreasing order:");
+        System.out.println("Baby products in decreasing order:");
         babyProductsInDecreasingPrice.forEach(System.out::println);
 
         System.out.println("----------------------------------");
 
-        List<Product> gunsProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Guns")).toList();
+        List<Product> carProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Cars")).toList();
 
-        List<Product> mostExpensiveGun = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Guns")).limit(1).toList();
+        List<Product> mostExpensiveCar = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Cars")).limit(1).toList();
 
-        System.out.println("Most expensive gun product:");
-        mostExpensiveGun.forEach(System.out::println);
+        System.out.println("Most expensive car product:");
+        mostExpensiveCar.forEach(System.out::println);
 
         System.out.println("-----------LIST-----------");
 
-        System.out.println("Guns product in decreasing order:");
-        gunsProductsInDecreasingPrice.forEach(System.out::println);
+        System.out.println("Car products in decreasing order:");
+        carProductsInDecreasingPrice.forEach(System.out::println);
 
         System.out.println("--------------------------------------------------------------------------------------------------------");
 
@@ -138,6 +138,27 @@ public class Application {
 
         System.out.println("Average total of an order: " + averageOrderTotal + " $");
 
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+
+//        es5
+        System.out.println("es5");
+
+        double totalPriceBooks =  productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Books")).mapToDouble(Product::getPrice).sum();
+
+        System.out.println("The total price of books: " + totalPriceBooks + " $");
+
+        double totalPriceBoysProduct =  productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Boys")).mapToDouble(Product::getPrice).sum();
+
+        System.out.println("The total price of boys products: " + totalPriceBoysProduct + " $");
+
+        double totalPriceBabyProduct =  productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Baby")).mapToDouble(Product::getPrice).sum();
+
+        System.out.println("The total price of baby products: " + totalPriceBabyProduct + " $");
+
+        double totalPriceCarProduct =  productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Cars")).mapToDouble(Product::getPrice).sum();
+
+        System.out.println("The total price of car products: " + totalPriceCarProduct + " $");
+
     }
     public static Supplier<Product> getProductSupplier() {
         Random rdm = new Random();
@@ -148,12 +169,12 @@ public class Application {
 
             String rmdName = faker.commerce().productName();
 
-            int rdmCategory = rdm.nextInt(0, 5);
+            int rdmCategory = rdm.nextInt(0, 4);
 
             double rdmPrice = rdm.nextDouble(10.00, 200.00);
 
 
-            List<String> categoryList = List.of("Books", "Boys", "Baby", "Cars", "Guns");
+            List<String> categoryList = List.of("Books", "Boys", "Baby", "Cars");
 
             return new Product(rdmId, rmdName, categoryList.get(rdmCategory), rdmPrice);
         };
