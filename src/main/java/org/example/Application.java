@@ -17,7 +17,7 @@ public class Application {
 
         Supplier<Product> productSupplier = getProductSupplier();
         List<Product> productList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             productList.add(productSupplier.get());
         }
 
@@ -104,10 +104,10 @@ public class Application {
 
         List<Product> mostExpensiveBabyProduct = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Baby")).limit(1).toList();
 
-        System.out.println("-----------LIST-----------");
-
         System.out.println("Most expensive baby product:");
         mostExpensiveBabyProduct.forEach(System.out::println);
+
+        System.out.println("-----------LIST-----------");
 
         System.out.println("Baby  product in decreasing order:");
         babyProductsInDecreasingPrice.forEach(System.out::println);
@@ -136,7 +136,7 @@ public class Application {
                         .mapToDouble(Product::getPrice)
                         .sum()).average().getAsDouble();
 
-        System.out.println("Average total of an order: " + averageOrderTotal);
+        System.out.println("Average total of an order: " + averageOrderTotal + " $");
 
     }
     public static Supplier<Product> getProductSupplier() {
