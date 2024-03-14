@@ -41,7 +41,7 @@ public class Application {
 
         orderByCustomer.forEach((customer, customerOrderList) -> System.out.println("Costumer: " + customer.getName() + " - " + "order " +customerOrderList));
 
-        System.out.println("----------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------------------------");
 
 //        es2
         System.out.println("es2");
@@ -52,12 +52,20 @@ public class Application {
 
         totalOrderByCustomer.forEach((customer, totalOrder)-> System.out.println("Customer: " + customer.getName() + " - " + "total of order: " + totalOrder + " $"));
 
-        System.out.println("----------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------------------------");
 
 //        es3
         System.out.println("es3");
 
         List<Product> productsInDecreasingPrice = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed()).toList();
+
+        List<Product> highestPriceForProduct = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed()).limit(1).toList();
+
+
+        System.out.println("Most expensive product:");
+        highestPriceForProduct.forEach(System.out::println);
+
+        System.out.println("-----------LIST-----------");
 
         System.out.println("All products in decreasing order:");
         productsInDecreasingPrice.forEach(System.out::println);
@@ -66,12 +74,26 @@ public class Application {
 
         List<Product> booksProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Books")).toList();
 
+        List<Product> mostExpensiveBook = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Books")).limit(1).toList();
+
+        System.out.println("Most expensive book:");
+        mostExpensiveBook.forEach(System.out::println);
+
+        System.out.println("-----------LIST-----------");
+
         System.out.println("Books product in decreasing order:");
         booksProductsInDecreasingPrice.forEach(System.out::println);
 
         System.out.println("----------------------------------");
 
         List<Product> boysProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Boys")).toList();
+
+        List<Product> mostExpensiveBoysProducts = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Boys")).limit(1).toList();
+
+        System.out.println("Most expensive boys product:");
+        mostExpensiveBoysProducts.forEach(System.out::println);
+
+        System.out.println("-----------LIST-----------");
 
         System.out.println("Boys product in decreasing order:");
         boysProductsInDecreasingPrice.forEach(System.out::println);
@@ -80,15 +102,41 @@ public class Application {
 
         List<Product> babyProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Baby")).toList();
 
+        List<Product> mostExpensiveBabyProduct = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Baby")).limit(1).toList();
+
+        System.out.println("-----------LIST-----------");
+
+        System.out.println("Most expensive baby product:");
+        mostExpensiveBabyProduct.forEach(System.out::println);
+
         System.out.println("Baby  product in decreasing order:");
-        boysProductsInDecreasingPrice.forEach(System.out::println);
+        babyProductsInDecreasingPrice.forEach(System.out::println);
 
         System.out.println("----------------------------------");
 
         List<Product> gunsProductsInDecreasingPrice = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Guns")).toList();
 
+        List<Product> mostExpensiveGun = productsInDecreasingPrice.stream().filter(product -> product.getCategory().equals("Guns")).limit(1).toList();
+
+        System.out.println("Most expensive gun product:");
+        mostExpensiveGun.forEach(System.out::println);
+
+        System.out.println("-----------LIST-----------");
+
         System.out.println("Guns product in decreasing order:");
-        boysProductsInDecreasingPrice.forEach(System.out::println);
+        gunsProductsInDecreasingPrice.forEach(System.out::println);
+
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+
+//        es4
+        System.out.println("es4");
+
+        double averageOrderTotal = orderList.stream().mapToDouble(order ->
+                order.getProducts().stream()
+                        .mapToDouble(Product::getPrice)
+                        .sum()).average().getAsDouble();
+
+        System.out.println("Average total of an order: " + averageOrderTotal);
 
     }
     public static Supplier<Product> getProductSupplier() {
