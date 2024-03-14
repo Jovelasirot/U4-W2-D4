@@ -38,9 +38,26 @@ public class Application {
 
 
 //        es1
-        Map<Customer, List<Order>> orderByClient = orderList.stream().collect(Collectors.groupingBy(Order::getCustomer));
+        System.out.println("es1");
 
-        orderByClient.forEach((customer, customerOrderList) -> System.out.println("Costumer: " + customer.getName() + " - " + "order " +customerOrderList));
+        Map<Customer, List<Order>> orderByCustomer = orderList.stream().collect(Collectors.groupingBy(Order::getCustomer));
+
+        orderByCustomer.forEach((customer, customerOrderList) -> System.out.println("Costumer: " + customer.getName() + " - " + "order " +customerOrderList));
+
+        System.out.println("----------------------------------------------------");
+
+//        es2
+        System.out.println("es2");
+
+        Map<Customer, Double> totalOrderByCustomer = orderList.stream()
+                .collect(Collectors.groupingBy(Order::getCustomer, Collectors.summingDouble(order ->
+                        order.getProducts().stream().mapToDouble(Product::getPrice).sum())));
+
+        totalOrderByCustomer.forEach((customer, totalOrder)-> System.out.println("Customer: " + customer.getName() + " - " + "total of order: " + totalOrder + " $"));
+
+        System.out.println("----------------------------------------------------");
+
+//        
     }
     public static Supplier<Product> getProductSupplier() {
         Random rdm = new Random();
@@ -55,7 +72,6 @@ public class Application {
 
             double rdmPrice = rdm.nextDouble(10.00, 200.00);
 
-            List<String> nameList = List.of("Product A", "Product B", "Product C", "Product D", "Product E");
 
             List<String> categoryList = List.of("Books", "Boys", "Baby", "Cars", "Guns");
 
@@ -90,7 +106,7 @@ public class Application {
 //            dates
             LocalDate startDate = LocalDate.parse("2021-01-01");
 
-            int rdmProduct = rdm.nextInt(1, 3);
+            int rdmProduct = rdm.nextInt(1, 5);
 //            products
             List<Product> rdmProductList = new ArrayList<>();
             for (int i = 0; i < rdmProduct; i++) {
