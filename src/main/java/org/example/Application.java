@@ -4,7 +4,10 @@ import com.github.javafaker.Faker;
 import entities.Customer;
 import entities.Order;
 import entities.Product;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Supplier;
@@ -159,6 +162,54 @@ public class Application {
 
         System.out.println("The total price of car products: " + totalPriceCarProduct + " $");
 
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+
+//        es6
+        System.out.println("es6");
+
+        List<Product> booksList = productList.stream()
+                .filter(product -> product.getCategory().equals("Books"))
+                .toList();
+
+//        booksList.forEach(System.out::println);
+
+        List<Product> boysProductList = productList.stream()
+                .filter(product -> product.getCategory().equals("Boys"))
+                .toList();
+
+//        boysProductList.forEach(System.out::println);
+
+        List<Product> babyProductList = productList.stream()
+                .filter(product -> product.getCategory().equals("Baby"))
+                .toList();
+
+//        babyProductList.forEach(System.out::println);
+
+        List<Product> carProductList = productList.stream()
+                .filter(product -> product.getCategory().equals("Cars"))
+                .toList();
+
+//        carProductList.forEach(System.out::println);
+
+        saveProductsOnDisc(productList, "src/main/data/products.txt");
+
+
+        saveProductsOnDisc(booksList, "src/main/data/booksList.txt");
+
+        saveProductsOnDisc(boysProductList, "src/main/data/boysProductList.txt");
+
+        saveProductsOnDisc(babyProductList, "src/main/data/babyProductList.txt");
+
+        saveProductsOnDisc(carProductList, "src/main/data/carProductList.txt");
+
+        System.out.println("View in folder 'data'.");
+
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+
+//        es7
+        System.out.println("es7");
+
+
     }
     public static Supplier<Product> getProductSupplier() {
         Random rdm = new Random();
@@ -224,4 +275,23 @@ public class Application {
             return new Order(rdmId, statusList.get(rdmStatus), orderDate, deliveryDate, rdmProductList, rdmCustomer);
         };
     }
+
+//    es6
+    public static void saveProductsOnDisc(List<Product> productList, String filePath){
+        File file =new File(filePath);
+        StringBuilder dataToWrite = new StringBuilder();
+
+        for (Product product : productList) {
+            dataToWrite.append(product.getName()).append("@")
+                    .append(product.getCategory()).append("@")
+                    .append(product.getPrice()).append("#");
+        }
+
+        try {
+            FileUtils.writeStringToFile(file, dataToWrite.toString(), "UTF-8");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
 }
